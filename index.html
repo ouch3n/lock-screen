@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>System Error</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0078D7;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      cursor: none;
+    }
+    .emoji { font-size: 120px; margin-bottom: 30px; }
+    h1 { font-size: 48px; font-weight: 300; margin-bottom: 20px; }
+    p { font-size: 18px; line-height: 1.8; max-width: 600px; }
+    .code { margin-top: 40px; font-size: 14px; opacity: 0.8; }
+    .blink { animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</head>
+<body>
+  <div class="emoji">:(</div>
+  <h1>Ton PC a rencontré un problème.</h1>
+  <p>Nous collectons quelques informations sur l'erreur, puis nous redémarrerons pour toi.</p>
+  <p style="margin-top:20px"><span class="blink">█</span> Analyse en cours... <span id="pct">0</span>%</p>
+  <div class="code">
+    Erreur : KHALED_WAS_HERE<br>
+    Pour plus d'infos : <u>stop.code/0x000021A</u>
+  </div>
+
+  <script>
+    // Bloque quasiment tout
+    document.addEventListener('keydown', e => e.preventDefault());
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Faux pourcentage qui monte
+    let pct = 0;
+    setInterval(() => {
+      if (pct < 99) pct += Math.floor(Math.random() * 3);
+      document.getElementById('pct').textContent = pct;
+    }, 300);
+  </script>
+</body>
+</html>
