@@ -34,11 +34,34 @@
   </div>
 
   <script>
-    // Bloque quasiment tout
-    document.addEventListener('keydown', e => e.preventDefault());
+    // Bloque TOUTES les touches
+    document.addEventListener('keydown', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    });
+
+    // Bloque clic droit
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // Faux pourcentage qui monte
+    // Demande le fullscreen au premier clic (obligatoire par les navigateurs)
+    document.addEventListener('click', function() {
+      document.documentElement.requestFullscreen();
+    });
+
+    // Si on quitte le fullscreen, on le remet automatiquement
+    document.addEventListener('fullscreenchange', function() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      }
+    });
+
+    // Si la fenêtre perd le focus, la reprend
+    window.addEventListener('blur', function() {
+      setTimeout(() => window.focus(), 100);
+    });
+
+    // Faux pourcentage
     let pct = 0;
     setInterval(() => {
       if (pct < 99) pct += Math.floor(Math.random() * 3);
